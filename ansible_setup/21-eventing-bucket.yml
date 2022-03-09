@@ -1,0 +1,19 @@
+---
+- name: Setup bucket
+  hosts: couchbase_main
+  tasks:
+  - include_vars: eventing_bucket_vars.yml
+  - name: create bucket {{ item.name }} with {{ item.replicas }} replicas
+    shell: /opt/couchbase/bin/couchbase-cli bucket-create -c 127.0.0.1:8091 --bucket={{ item.name }} --bucket-type=couchbase --bucket-ramsize={{ item.ram }} --bucket-replica={{ item.replicas }} --bucket-eviction-policy={{ item.eviction }} -u {{ admin_user }} -p {{ admin_password }}
+    with_items:
+      - "{{ buckets }}"
+
+  - name: create scope {{ item.scope_name }}
+    shell: /opt/couchbase/bin/couchbase-cli collection-manage -c 127.0.0.1:8091 --bucket={{ item.bucket_name }} --create-scope {{ item.scope_name }} -u {{ admin_user }} -p {{ admin_password }}
+    with_items:
+      - "{{ scope_collection }}"
+
+  - name: create collection {{ item.collection }}
+    shell: /opt/couchbase/bin/couchbase-cli collection-manage -c 127.0.0.1:8091 --bucket={{ item.bucket_name }} --create-collection {{ item.scope_name }}.{{ item.collection_name }} -u {{ admin_user }} -p {{ admin_password }}
+    with_items:
+      - "{{ scope_collection }}"

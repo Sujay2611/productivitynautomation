@@ -4,7 +4,7 @@ ansible_ssh_pass=couchbase
 ansible_ssh_user=root
 
 [couchbase_main]
-host0 services=data,index,query,fts
+host0 services=data,index,query,fts,eventing
 
 [couchbase_nodes]
 host1 services=data,index,query,fts

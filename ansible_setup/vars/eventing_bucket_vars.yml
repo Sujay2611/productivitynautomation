@@ -1,0 +1,8 @@
+buckets:
+- { "name": "src_bucket", "ram":200, "replicas":2, "eviction": "fullEviction" }
+- { "name": "metadata", "ram":200, "replicas":2, "eviction": "fullEviction" }
+- { "name": "dst_bucket", "ram":200, "replicas":2, "eviction": "fullEviction" }
+scope_collection:
+- { "bucket_name": "src_bucket", "scope_name": "src_bucket", "collection_name": "src_bucket" }
+- { "bucket_name": "metadata", "scope_name": "metadata", "collection_name": "metadata" }
+- { "bucket_name": "dst_bucket", "scope_name": "dst_bucket", "collection_name": "dst_bucket" }
